@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">Click me</button>
+    <button id="throttling">Throttling</button>
+    <script>
+      const handleClick = () => {
+        console.log("Button clicked");
+      };
+      const debounce = (fn, delay) => {
+        let timeoutId;
+        return function (...args) {
+          if (timeoutId) {
+            clearTimeout(timeoutId);
+          }
+          timeoutId = setTimeout(() => {
+            fn(...args);
+          }, delay);
+        };
+      };
+      document
+        .getElementById("btn")
+        .addEventListener("click", debounce(handleClick, 3000));
+
+      const throttle = (fn, delay) => {
+        let flag = true;
+        return function (...args) {
+          if (flag) {
+            fn(...args);
+            flag = false;
+            setTimeout(() => {
+              flag = true;
+            }, delay);
+          }
+        };
+      };
+      document
+        .getElementById("throttling")
+        .addEventListener("click", throttle(handleClick, 3000));
+      /*
+     
+      1. All JavaScript objects inherit properties and methods from a prototype.
+      2. The Object.prototype is on the top of the prototype inheritance chain:
+      */
+      const person = {
+        name: "John",
+        age: 30,
+      };
+      console.log(person);
+      // const proto = {
+      //   greeting: function () {
+      //     console.log(`Hello ${this.name}`);
+      //   },
+      // };
+      // Object.setPrototypeOf(person, proto);
+      // person.greeting();
+    </script>
+  </body>
+</html>
